@@ -1,6 +1,5 @@
 package com.example.angai.diplom.router.business;
 
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 
 import com.example.angai.diplom.router.business.screens.HomeScreen;
@@ -9,7 +8,6 @@ import com.example.angai.diplom.router.business.screens.NotificationsScreen;
 
 public abstract class AppScreen {
 
-    @IdRes
     public abstract int getId();
 
     public abstract Fragment getFragment();
@@ -22,7 +20,7 @@ public abstract class AppScreen {
         };
     }
 
-    public static AppScreen getById(@IdRes int resId) {
+    public static AppScreen getById(int resId) {
         for (AppScreen appScreen : getList()) {
             if (appScreen.getId() == resId) {
                 return appScreen;

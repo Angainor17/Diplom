@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="label_style">
+        <item name="android:fontFamily">@string/font_family_light</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="bus_stop_auto_complete_style">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:background">@color/autoCompleteTextBackground</item>
+    </style>
+
 </resources>

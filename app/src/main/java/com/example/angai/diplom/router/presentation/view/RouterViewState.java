@@ -8,5 +8,4 @@ public class RouterViewState implements ViewState<IRouter> {
     public void apply(IRouter view, boolean retained) {
 
     }
-
 }

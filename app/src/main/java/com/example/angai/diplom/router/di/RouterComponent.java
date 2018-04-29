@@ -7,7 +7,7 @@ import com.example.angai.diplom.router.presentation.view.IRouter;
 import dagger.Component;
 
 @RouterScope
-@Component(dependencies = AppComponent.class, modules = RouterModule.class)
+@Component(dependencies = AppComponent.class, modules = {RouterModule.class})
 public interface RouterComponent {
 
     void inject(IRouter router);

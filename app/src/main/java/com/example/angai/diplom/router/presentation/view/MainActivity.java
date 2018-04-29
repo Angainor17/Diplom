@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
-import android.view.MenuItem;
 
 import com.example.angai.diplom.R;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.router.business.AppScreen;
+import com.example.angai.diplom.router.business.screens.HomeScreen;
 import com.example.angai.diplom.router.presentation.presenter.IRouterPresenter;
+import com.example.angai.diplom.router.presentation.presenter.RouterPresenter;
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
 
 import javax.inject.Inject;
@@ -21,11 +22,12 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         App.getInjector().getRouterComponent().inject(this);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         initViews();
+        showScreen(new HomeScreen());
     }
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     @NonNull
     @Override
     public IRouterPresenter createPresenter() {
+        presenter = new RouterPresenter();
         return presenter;
     }
 
@@ -55,12 +58,9 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     private void initViews() {
         BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                presenter.screenSelected(AppScreen.getById(item.getItemId()));
-                return true;
-            }
+        navigation.setOnNavigationItemSelectedListener(item -> {
+            presenter.screenSelected(AppScreen.getById(item.getItemId()));
+            return true;
         });
     }
 }

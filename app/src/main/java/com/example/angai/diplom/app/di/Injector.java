@@ -17,80 +17,89 @@ import com.example.angai.diplom.router.di.RouterModule;
 
 public class Injector {
 
-    private static Context context;
-
     private AppComponent appComponent;
     private HomeComponent homeComponent;
     private RouterComponent routerComponent;
     private NotificationComponent notificationComponent;
     private MapComponent mapComponent;
 
-    public Injector(Context context) {
-        Injector.context = context;
+    private Context context;
 
-        initAppComponent();
-        initHomeComponent();
-        initRouterComponent();
-        initNotificationComponent();
-        initMapComponent();
+    public Injector(Context context) {
+        this.context = context;
     }
 
     public AppComponent getAppComponent() {
+        if (appComponent == null) {
+            appComponent = initAppComponent();
+        }
         return appComponent;
     }
 
     public HomeComponent getHomeComponent() {
+        if (homeComponent == null) {
+            homeComponent = initHomeComponent();
+        }
         return homeComponent;
     }
 
     public RouterComponent getRouterComponent() {
+        if (routerComponent == null) {
+            routerComponent = initRouterComponent();
+        }
         return routerComponent;
     }
 
     public NotificationComponent getNotificationComponent() {
+        if (notificationComponent == null) {
+            notificationComponent = initNotificationComponent();
+        }
         return notificationComponent;
     }
 
     public MapComponent getMapComponent() {
+        if (mapComponent == null) {
+            mapComponent = initMapComponent();
+        }
         return mapComponent;
     }
 
-    private void initNotificationComponent() {
-        notificationComponent = DaggerNotificationComponent
+    private NotificationComponent initNotificationComponent() {
+        return DaggerNotificationComponent
                 .builder()
-                .appComponent(appComponent)
+                .appComponent(getAppComponent())
                 .notificationModule(new NotificationModule())
                 .build();
     }
 
-    private void initMapComponent() {
-        mapComponent = DaggerMapComponent
+    private MapComponent initMapComponent() {
+        return DaggerMapComponent
                 .builder()
-                .appComponent(appComponent)
+                .appComponent(getAppComponent())
                 .mapModule(new MapModule())
                 .build();
     }
 
-    private void initAppComponent() {
-        appComponent = DaggerAppComponent
+    private AppComponent initAppComponent() {
+        return DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(context))
                 .build();
     }
 
-    private void initRouterComponent() {
-        routerComponent = DaggerRouterComponent
+    private RouterComponent initRouterComponent() {
+        return DaggerRouterComponent
                 .builder()
-                .appComponent(appComponent)
+                .appComponent(getAppComponent())
                 .routerModule(new RouterModule())
                 .build();
     }
 
-    private void initHomeComponent() {
-        homeComponent = DaggerHomeComponent
+    private HomeComponent initHomeComponent() {
+        return DaggerHomeComponent
                 .builder()
                 .homeModule(new HomeModule())
-                .appComponent(appComponent)
+                .appComponent(getAppComponent())
                 .build();
     }
 }

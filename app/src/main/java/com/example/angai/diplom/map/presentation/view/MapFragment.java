@@ -1,30 +1,31 @@
 package com.example.angai.diplom.map.presentation.view;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.angai.diplom.R;
+import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.map.presentation.presenter.IMapPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
+//import com.yandex.mapkit.MapKitFactory;
+//import com.yandex.mapkit.mapview.MapView;
 
-public class MapFragment extends MvpFragment<IMapView, IMapPresenter> implements IMapView{
+import org.androidannotations.annotations.EFragment;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+@EFragment(R.layout.fragment_map)
+public class MapFragment extends MvpFragment<IMapView, IMapPresenter> implements IMapView {
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+//    @Inject
+//    IMapPresenter presenter;
+
+//    @ViewById(R.id.map_view)
+//    MapView mapView;
+
+    public MapFragment() {
+//        App.getInjector().getMapComponent().inject(this);
+//        MapKitFactory.setApiKey("Ваш API ключ");
+//        MapKitFactory.initialize(getContext());
     }
 
     @Override
     public IMapPresenter createPresenter() {
-        return null;
+        return presenter;
     }
 }

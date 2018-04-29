@@ -8,7 +8,7 @@ public class RouterPresenter extends MvpBasePresenter<IRouter> implements IRoute
 
     @Override
     public void screenSelected(AppScreen appScreen) {
-        if(isViewAttached()){
+        if (isViewAttached()) {
             getView().showScreen(appScreen);
         }
     }

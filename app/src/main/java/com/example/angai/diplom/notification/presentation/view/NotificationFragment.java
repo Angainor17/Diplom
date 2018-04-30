@@ -1,31 +1,35 @@
 package com.example.angai.diplom.notification.presentation.view;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.angai.diplom.R;
+import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.notification.presentation.presenter.INotificationPresenter;
-import com.example.angai.diplom.notification.presentation.presenter.NotificationPresenter;
-import com.hannesdorfmann.mosby3.mvp.MvpFragment;
+import com.example.angai.diplom.utils.mvp.CustomMvpFragment;
 
-public class NotificationFragment extends MvpFragment<INotificationView, INotificationPresenter> {
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+import javax.inject.Inject;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+@EFragment(R.layout.fragment_notification)
+public class NotificationFragment extends CustomMvpFragment<INotificationView, INotificationPresenter> {
+
+    @Inject
+    INotificationPresenter presenter;
+
+    public NotificationFragment() {
+        App.getInjector().getNotificationComponent().inject(this);
     }
 
     @NonNull
     @Override
     public INotificationPresenter createPresenter() {
-        return new NotificationPresenter();
+        return presenter;
+    }
+
+    @AfterViews
+    public void afterViews() {
+        showActionBarTitle("Напоминания");
     }
 }

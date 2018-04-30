@@ -6,4 +6,6 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 public interface IRouter extends MvpView {
 
     void showScreen(AppScreen appScreen);
+
+    AppScreen getCurrentScreen();
 }

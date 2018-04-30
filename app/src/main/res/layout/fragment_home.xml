@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.angai.diplom.utils.customViews.GradientConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,25 +14,32 @@
         style="@style/label_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="276dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="276dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="From" />
+        android:layout_marginTop="4dp"
+        android:text="Откуда"
+        app:layout_constraintEnd_toStartOf="@+id/user_location_btn"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.example.angai.diplom.utils.customViews.CustomAutoCompleteTextView
         android:id="@+id/auto_complete_tv_from"
-
         style="@style/bus_stop_auto_complete_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:completionThreshold="0"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:completionThreshold="0"
+        android:dropDownHeight="200dp"
+        app:layout_constraintEnd_toStartOf="@+id/user_location_btn"
+        app:layout_constraintStart_toStartOf="@+id/label_from"
         app:layout_constraintTop_toBottomOf="@+id/label_from" />
 
     <TextView
@@ -40,9 +47,9 @@
         style="@style/label_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="To"
-        app:layout_constraintStart_toStartOf="@+id/auto_complete_tv_to"
+        android:layout_marginTop="16dp"
+        android:text="Куда"
+        app:layout_constraintStart_toStartOf="@+id/auto_complete_tv_from"
         app:layout_constraintTop_toBottomOf="@+id/auto_complete_tv_from" />
 
     <com.example.angai.diplom.utils.customViews.CustomAutoCompleteTextView
@@ -50,11 +57,41 @@
 
         style="@style/bus_stop_auto_complete_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:completionThreshold="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        android:dropDownHeight="200dp"
+        app:layout_constraintEnd_toEndOf="@+id/user_location_btn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_to" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/route_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_background"
+        android:text="Построить маршрут"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="@+id/auto_complete_tv_to"
+        app:layout_constraintTop_toBottomOf="@+id/auto_complete_tv_to" />
+
+    <ImageButton
+        android:id="@+id/user_location_btn"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Ближайшая остановка"
+        android:src="@android:drawable/ic_menu_compass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/auto_complete_tv_from" />
+
+
+</com.example.angai.diplom.utils.customViews.GradientConstraintLayout>

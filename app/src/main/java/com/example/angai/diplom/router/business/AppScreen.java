@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.example.angai.diplom.router.business.screens.HomeScreen;
 import com.example.angai.diplom.router.business.screens.MapScreen;
 import com.example.angai.diplom.router.business.screens.NotificationsScreen;
+import com.example.angai.diplom.router.business.screens.TransportScreen;
 
 public abstract class AppScreen {
 
@@ -16,7 +17,8 @@ public abstract class AppScreen {
         return new AppScreen[]{
                 new HomeScreen(),
                 new MapScreen(),
-                new NotificationsScreen()
+                new NotificationsScreen(),
+                new TransportScreen()
         };
     }
 

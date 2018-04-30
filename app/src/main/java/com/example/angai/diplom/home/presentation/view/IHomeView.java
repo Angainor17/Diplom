@@ -6,4 +6,8 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 public interface IHomeView extends MvpView {
 
     void initBusStopViews(BusStop[] busStops);
+
+    void onGetLocationBtnClick();
+
+    void onBuildRouteBtnClick();
 }

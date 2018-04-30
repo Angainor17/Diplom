@@ -10,7 +10,6 @@ import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.router.business.AppScreen;
 import com.example.angai.diplom.router.business.screens.HomeScreen;
 import com.example.angai.diplom.router.presentation.presenter.IRouterPresenter;
-import com.example.angai.diplom.router.presentation.presenter.RouterPresenter;
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
 
 import javax.inject.Inject;
@@ -19,6 +18,8 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     @Inject
     IRouterPresenter presenter;
+
+    private AppScreen currentScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +33,21 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     @Override
     public void showScreen(AppScreen appScreen) {
+        currentScreen = appScreen;
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, appScreen.getFragment())
                 .commit();
     }
 
+    @Override
+    public AppScreen getCurrentScreen() {
+        return currentScreen;
+    }
+
     @NonNull
     @Override
     public IRouterPresenter createPresenter() {
-        presenter = new RouterPresenter();
         return presenter;
     }
 

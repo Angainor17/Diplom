@@ -3,7 +3,7 @@ package com.example.angai.diplom.router.business.screens;
 import android.support.v4.app.Fragment;
 
 import com.example.angai.diplom.R;
-import com.example.angai.diplom.notification.presentation.view.NotificationFragment;
+import com.example.angai.diplom.notification.presentation.view.NotificationFragment_;
 import com.example.angai.diplom.router.business.AppScreen;
 
 public class NotificationsScreen extends AppScreen {
@@ -15,6 +15,6 @@ public class NotificationsScreen extends AppScreen {
 
     @Override
     public Fragment getFragment() {
-        return new NotificationFragment();
+        return new NotificationFragment_();
     }
 }

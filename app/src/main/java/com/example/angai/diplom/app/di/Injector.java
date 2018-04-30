@@ -14,6 +14,9 @@ import com.example.angai.diplom.notification.di.NotificationModule;
 import com.example.angai.diplom.router.di.DaggerRouterComponent;
 import com.example.angai.diplom.router.di.RouterComponent;
 import com.example.angai.diplom.router.di.RouterModule;
+import com.example.angai.diplom.transport.di.DaggerTransportComponent;
+import com.example.angai.diplom.transport.di.TransportComponent;
+import com.example.angai.diplom.transport.di.TransportModule;
 
 public class Injector {
 
@@ -22,6 +25,7 @@ public class Injector {
     private RouterComponent routerComponent;
     private NotificationComponent notificationComponent;
     private MapComponent mapComponent;
+    private TransportComponent transportComponent;
 
     private Context context;
 
@@ -42,6 +46,14 @@ public class Injector {
         }
         return homeComponent;
     }
+
+    public TransportComponent getTransportComponent() {
+        if (transportComponent == null) {
+            transportComponent = initTransportComponent();
+        }
+        return transportComponent;
+    }
+
 
     public RouterComponent getRouterComponent() {
         if (routerComponent == null) {
@@ -77,6 +89,14 @@ public class Injector {
                 .builder()
                 .appComponent(getAppComponent())
                 .mapModule(new MapModule())
+                .build();
+    }
+
+    private TransportComponent initTransportComponent() {
+        return DaggerTransportComponent
+                .builder()
+                .appComponent(getAppComponent())
+                .transportModule(new TransportModule())
                 .build();
     }
 

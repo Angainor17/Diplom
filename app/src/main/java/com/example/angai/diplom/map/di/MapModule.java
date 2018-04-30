@@ -9,8 +9,8 @@ import dagger.Provides;
 @Module
 public class MapModule {
 
-//    @Provides
-//    IMapPresenter mapPresenter() {
-//        return new MapPresenter();
-//    }
+    @Provides
+    IMapPresenter mapPresenter() {
+        return new MapPresenter();
+    }
 }

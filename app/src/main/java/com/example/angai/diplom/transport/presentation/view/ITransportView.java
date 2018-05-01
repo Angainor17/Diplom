@@ -7,4 +7,6 @@ public interface ITransportView extends MvpView {
 
     void setDiscreteScrollViewItems(Route[] routes);
 
+    void setRouteListSelection(int position);
+
 }

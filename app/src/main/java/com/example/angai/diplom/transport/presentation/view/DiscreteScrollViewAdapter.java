@@ -50,6 +50,10 @@ public class DiscreteScrollViewAdapter extends RecyclerView.Adapter<DiscreteScro
 
         TextView routeNumber;
 
+        public Route getItem(int position) {
+            return routes[position];
+        }
+
         public RoutesViewHolder(View itemView) {
             super(itemView);
             routeNumber = itemView.findViewById(R.id.bus_stop_number);

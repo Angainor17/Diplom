@@ -71,6 +71,6 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
 
     @AfterViews
     public void afterViews() {
-        hideActionBar();
+
     }
 }

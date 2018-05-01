@@ -3,6 +3,7 @@ package com.example.angai.diplom.router.presentation.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.example.angai.diplom.R;
@@ -25,6 +26,9 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     protected void onCreate(Bundle savedInstanceState) {
         App.getInjector().getRouterComponent().inject(this);
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         setContentView(R.layout.activity_main);
         initViews();
@@ -35,8 +39,10 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     public void showScreen(AppScreen appScreen) {
         currentScreen = appScreen;
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, appScreen.getFragment())
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, getFragment(appScreen), appScreen.toString())
                 .commit();
     }
 
@@ -68,5 +74,13 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
             presenter.screenSelected(AppScreen.getById(item.getItemId()));
             return true;
         });
+    }
+
+    private Fragment getFragment(AppScreen appScreen) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(appScreen.toString());
+        if (fragment == null) {
+            fragment = appScreen.getFragment();
+        }
+        return fragment;
     }
 }

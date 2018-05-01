@@ -17,4 +17,9 @@ public class NotificationsScreen extends AppScreen {
     public Fragment getFragment() {
         return new NotificationFragment_();
     }
+
+    @Override
+    public String toString() {
+        return "NotificationsScreen";
+    }
 }

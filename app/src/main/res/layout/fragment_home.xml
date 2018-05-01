@@ -75,23 +75,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/btn_background"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Построить маршрут"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="@+id/auto_complete_tv_to"
         app:layout_constraintTop_toBottomOf="@+id/auto_complete_tv_to" />
 
     <ImageButton
         android:id="@+id/user_location_btn"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="Ближайшая остановка"
-        android:src="@android:drawable/ic_menu_compass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/auto_complete_tv_from" />
+        android:scaleType="center"
+        android:src="@mipmap/ic_my_location"
+        app:layout_constraintBottom_toBottomOf="@+id/auto_complete_tv_from"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </com.example.angai.diplom.utils.customViews.GradientConstraintLayout>

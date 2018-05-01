@@ -10,6 +10,13 @@ public class RouteApiModel {
     @SerializedName("name")
     private String name;
 
+    @SerializedName("transportType")
+    private int transportType;
+
+    public int getTransportType() {
+        return transportType;
+    }
+
     public int getId() {
         return id;
     }

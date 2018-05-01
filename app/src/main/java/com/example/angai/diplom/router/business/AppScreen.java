@@ -13,6 +13,8 @@ public abstract class AppScreen {
 
     public abstract Fragment getFragment();
 
+    public abstract String toString();
+
     public static AppScreen[] getList() {
         return new AppScreen[]{
                 new HomeScreen(),

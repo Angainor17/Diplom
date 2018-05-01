@@ -17,4 +17,9 @@ public class HomeScreen extends AppScreen {
     public Fragment getFragment() {
         return new HomeFragment_();
     }
+
+    @Override
+    public String toString() {
+        return "HomeScreen";
+    }
 }

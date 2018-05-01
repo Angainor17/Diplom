@@ -1,8 +1,6 @@
 package com.example.angai.diplom.home.presentation.view;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,7 +11,6 @@ import com.example.angai.diplom.home.business.BusStop;
 import com.example.angai.diplom.home.presentation.presenter.IHomePresenter;
 import com.example.angai.diplom.utils.customViews.CustomAutoCompleteTextView;
 import com.example.angai.diplom.utils.mvp.CustomMvpFragment;
-import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -59,7 +56,6 @@ public class HomeFragment extends CustomMvpFragment<IHomeView, IHomePresenter> i
 
     @AfterViews
     public void initUi() {
-        showActionBarTitle("Выбор маршрута");
         presenter.onUiInit();
     }
 

@@ -17,4 +17,9 @@ public class TransportScreen extends AppScreen {
     public Fragment getFragment() {
         return new TransportFragment_();
     }
+
+    @Override
+    public String toString() {
+        return "TransportScreen";
+    }
 }

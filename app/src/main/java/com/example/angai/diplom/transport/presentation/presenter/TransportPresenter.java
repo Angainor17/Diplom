@@ -2,6 +2,7 @@ package com.example.angai.diplom.transport.presentation.presenter;
 
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.transport.business.ITransportInteractor;
+import com.example.angai.diplom.transport.business.Route;
 import com.example.angai.diplom.transport.presentation.view.ITransportView;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
@@ -14,6 +15,9 @@ public class TransportPresenter extends MvpBasePresenter<ITransportView> impleme
     @Inject
     ITransportInteractor interactor;
 
+    private Route[] routes;
+    private int selectedPosition = 2;
+
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public TransportPresenter() {
@@ -22,25 +26,36 @@ public class TransportPresenter extends MvpBasePresenter<ITransportView> impleme
 
     @Override
     public void viewInitAction() {
-        initDiscreteScrollView();
-    }
-
-    private void initDiscreteScrollView() {
-        compositeDisposable.add(interactor.getAllRoutes().subscribe(
-                routes -> {
-                    if (isViewAttached()) {
-                        getView().setDiscreteScrollViewItems(routes);
-                    }
-                },
-                throwable -> {
-                }
-                )
-        );
+        if (routes == null) {
+            initDiscreteScrollView();
+        } else {
+            refreshRoutesList();
+        }
     }
 
     @Override
     public void destroy() {
         compositeDisposable.clear();
         super.destroy();
+    }
+
+    private void refreshRoutesList() {
+        getView().setDiscreteScrollViewItems(routes);
+        getView().setRouteListSelection(selectedPosition);
+    }
+
+    private void initDiscreteScrollView() {
+        compositeDisposable.add(interactor.getAllRoutes().subscribe(
+                routes -> {
+                    this.routes = routes;
+                    if (isViewAttached()) {
+                        getView().setDiscreteScrollViewItems(routes);
+                        getView().setRouteListSelection(selectedPosition);
+                    }
+                },
+                throwable -> {
+                }
+                )
+        );
     }
 }

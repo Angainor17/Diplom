@@ -30,6 +30,6 @@ public class NotificationFragment extends CustomMvpFragment<INotificationView, I
 
     @AfterViews
     public void afterViews() {
-        showActionBarTitle("Напоминания");
+
     }
 }

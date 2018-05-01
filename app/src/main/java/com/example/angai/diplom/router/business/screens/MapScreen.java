@@ -17,4 +17,9 @@ public class MapScreen extends AppScreen {
     public Fragment getFragment() {
         return new MapFragment_();
     }
+
+    @Override
+    public String toString() {
+        return "MapScreen";
+    }
 }

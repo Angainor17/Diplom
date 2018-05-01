@@ -1,6 +1,7 @@
 package com.example.angai.diplom.home.presentation.view;
 
 import android.support.annotation.NonNull;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,7 +69,15 @@ public class HomeFragment extends CustomMvpFragment<IHomeView, IHomePresenter> i
     @Override
     @Click(R.id.user_location_btn)
     public void onGetLocationBtnClick() {
-
+//        userLocationBtn.animate()
+//                .rotationYBy(0)
+//                .rotationXBy(0)
+//                .rotationX(720)
+//                .rotationY(720)
+//                .setDuration(1000).start();
+        userLocationBtn.startAnimation(
+                AnimationUtils.loadAnimation(getContext(), R.anim.my_location_animation)
+        );
     }
 
     @Override

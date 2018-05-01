@@ -6,6 +6,7 @@
     <color name="colorBlack">#000000</color>
     <color name="autoCompleteTextBackground">#75aeea</color>
     <color name="discreteScrollViewBackground">#8ab0d9</color>
+    <color name="shadow">#56649e</color>
 
     <color name="gradientPeriodicClouds_c1">#3453d1</color>
     <color name="gradientPeriodicClouds_c2">#6d69ff</color>

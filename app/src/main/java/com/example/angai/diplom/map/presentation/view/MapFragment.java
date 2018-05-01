@@ -1,17 +1,14 @@
 package com.example.angai.diplom.map.presentation.view;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.example.angai.diplom.R;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.map.presentation.presenter.IMapPresenter;
 import com.example.angai.diplom.utils.mvp.CustomMvpFragment;
-import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.mapview.MapView;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -19,10 +16,9 @@ import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
 
-@EFragment(R.layout.fragment_map)
-public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> implements IMapView {
 
-    private final String YANDEX_API_KEY = "de2fbc30-7d44-49d1-9fbd-037accba36a5";
+@EFragment(R.layout.fragment_map)
+public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> implements IMapView, OnMapReadyCallback {
 
     @Inject
     IMapPresenter presenter;
@@ -30,23 +26,10 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
     @ViewById(R.id.map_view)
     MapView mapView;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    private GoogleMap googleMap;
+
+    public MapFragment() {
         App.getInjector().getMapComponent().inject(this);
-        super.onCreate(savedInstanceState);
-        MapKitFactory.setApiKey(YANDEX_API_KEY);
-
-    }
-
-    @AfterViews
-    public void initViews() {
-        MapKitFactory.initialize(getContext());
-
-        mapView.getMap().move(
-                new CameraPosition(new Point(33.538249, 44.604661), 11.0f, 0.0f, 0.0f),
-                new Animation(Animation.Type.SMOOTH, 0),
-                null
-        );
     }
 
     @NonNull
@@ -55,22 +38,50 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
         return presenter;
     }
 
+    @AfterViews
+    public void afterViews() {
+        mapView.onCreate(null);
+        mapView.getMapAsync(this);
+    }
+
     @Override
-    public void onStop() {
-        super.onStop();
-        mapView.onStop();
-        MapKitFactory.getInstance().onStop();
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        initGoogleMap();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        mapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
-        MapKitFactory.getInstance().onStart();
     }
 
-    @AfterViews
-    public void afterViews() {
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    private void initGoogleMap() {
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
     }
 }

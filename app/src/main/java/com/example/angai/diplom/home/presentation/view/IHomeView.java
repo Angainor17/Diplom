@@ -10,4 +10,6 @@ public interface IHomeView extends MvpView {
     void onGetLocationBtnClick();
 
     void onBuildRouteBtnClick();
+
+    void setBusStopNameFrom(String busStopName);
 }

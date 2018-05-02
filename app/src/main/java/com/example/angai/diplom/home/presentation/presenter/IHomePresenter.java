@@ -7,4 +7,5 @@ public interface IHomePresenter extends MvpPresenter<IHomeView> {
 
     void onUiInit();
 
+    void onGetLocationBtnClick();
 }

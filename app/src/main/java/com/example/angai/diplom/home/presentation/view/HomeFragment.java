@@ -69,15 +69,15 @@ public class HomeFragment extends CustomMvpFragment<IHomeView, IHomePresenter> i
     @Override
     @Click(R.id.user_location_btn)
     public void onGetLocationBtnClick() {
-//        userLocationBtn.animate()
-//                .rotationYBy(0)
-//                .rotationXBy(0)
-//                .rotationX(720)
-//                .rotationY(720)
-//                .setDuration(1000).start();
         userLocationBtn.startAnimation(
                 AnimationUtils.loadAnimation(getContext(), R.anim.my_location_animation)
         );
+        presenter.onGetLocationBtnClick();
+    }
+
+    @Override
+    public void setBusStopNameFrom(String busStopName) {
+        busStopFromTv.setText(busStopName);
     }
 
     @Override

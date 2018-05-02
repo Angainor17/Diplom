@@ -43,11 +43,23 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     @Override
     public void showScreen(AppScreen appScreen) {
         currentScreen = appScreen;
+        showFragment(getFragment(appScreen), appScreen);
+    }
+
+    @Override
+    public void showScreen(AppScreen appScreen, Bundle bundle) {
+        currentScreen = appScreen;
+        Fragment fragment = getFragment(appScreen);
+        fragment.setArguments(bundle);
+        showFragment(fragment, appScreen);
+    }
+
+    private void showFragment(Fragment fragment, AppScreen appScreen) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.fragment_container, getFragment(appScreen), appScreen.toString())
+                .replace(R.id.fragment_container, fragment, appScreen.toString())
                 .commit();
     }
 

@@ -1,5 +1,7 @@
 package com.example.angai.diplom.home.data;
 
+import android.location.Location;
+
 import com.google.gson.annotations.SerializedName;
 
 public class BusStopApiModel {
@@ -7,11 +9,11 @@ public class BusStopApiModel {
     @SerializedName("id")
     private String id;
 
-    @SerializedName("coordinateX")
-    private String coordinateX;
+    @SerializedName("longitude")
+    private String longitude;
 
-    @SerializedName("coordinateY")
-    private String coordinateY;
+    @SerializedName("latitude")
+    private String latitude;
 
     @SerializedName("name")
     private String name;
@@ -20,8 +22,26 @@ public class BusStopApiModel {
         return id;
     }
 
-    public CoordinateApiModel getCoordinate() {
-        return new CoordinateApiModel(coordinateX, coordinateY);
+    public Location getLocation() {
+        Location location = new Location("");
+        if (latitude == null || longitude == null) {
+            return location;
+        }
+
+        double l1 = Double.valueOf(longitude);
+        double l2 = Double.valueOf(latitude);
+        location.setLongitude(Double.valueOf(longitude));
+        location.setLatitude(Double.valueOf(latitude));
+
+        return location;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
     }
 
     public String getName() {

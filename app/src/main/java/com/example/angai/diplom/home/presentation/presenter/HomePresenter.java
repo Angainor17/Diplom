@@ -52,6 +52,22 @@ public class HomePresenter extends MvpBasePresenter<IHomeView> implements IHomeP
     }
 
     @Override
+    public void onGetLocationBtnClick() {
+        compositeDisposable.add(homeInteractor.getClosestBusStop()
+                .subscribe(busStop -> {
+                    if (isViewAttached()) {
+                        getView().setBusStopNameFrom(busStop.getName());
+                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    if (isViewAttached()) {
+                        getView().setBusStopNameFrom("");
+                    }
+                })
+        );
+    }
+
+    @Override
     public void destroy() {
         compositeDisposable.clear();
         super.destroy();

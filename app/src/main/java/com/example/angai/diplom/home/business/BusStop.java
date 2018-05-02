@@ -1,21 +1,19 @@
 package com.example.angai.diplom.home.business;
 
+import android.location.Location;
+
 import com.example.angai.diplom.home.data.BusStopApiModel;
 
 public class BusStop {
 
     private String id;
     private String name;
-    private Coordinate coordinate;
-
-    public BusStop(String name) {
-        this.name = name;
-    }
+    private Location location;
 
     public BusStop(BusStopApiModel busStopApiModel) {
         this.name = busStopApiModel.getName();
         this.id = busStopApiModel.getId();
-        this.coordinate = new Coordinate(busStopApiModel.getCoordinate());
+        this.location = busStopApiModel.getLocation();
     }
 
     public String getName() {
@@ -28,6 +26,14 @@ public class BusStop {
             strings[i] = busStops[i].getName();
         }
         return strings;
+    }
+
+    public float getDistanceTo(Location location) {
+        return getLocation().distanceTo(location);
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     public static BusStop[] getArray(BusStopApiModel[] busStopsApiModels) {

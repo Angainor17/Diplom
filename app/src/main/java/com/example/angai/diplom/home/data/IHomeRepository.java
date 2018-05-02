@@ -7,4 +7,5 @@ import io.reactivex.Single;
 public interface IHomeRepository {
 
     Single<ArrayList<BusStopApiModel>> getBusStopList();
+
 }

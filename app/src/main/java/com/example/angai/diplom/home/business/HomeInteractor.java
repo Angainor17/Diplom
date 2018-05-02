@@ -5,7 +5,7 @@ import android.location.Location;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.home.data.BusStopApiModel;
 import com.example.angai.diplom.home.data.IHomeRepository;
-import com.example.angai.diplom.home.data.IMyLocationRepository;
+import com.example.angai.diplom.home.data.ILocationRepository;
 
 import javax.inject.Inject;
 
@@ -18,7 +18,7 @@ public class HomeInteractor implements IHomeInteractor {
     IHomeRepository homeRepository;
 
     @Inject
-    IMyLocationRepository myLocationRepository;
+    ILocationRepository myLocationRepository;
 
     public HomeInteractor() {
         App.getInjector().getHomeComponent().inject(this);

@@ -83,7 +83,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_directions_bus_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/places/ic_airport_shuttle_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -93,7 +93,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_directions_bus_black" />
+                            <entry key="outputName" value="ic_topic_white" />
                             <entry key="sourceFile" value="C:\Users\angai" />
                           </map>
                         </option>

@@ -69,6 +69,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
 
+    compile 'com.github.clans:fab:1.6.4'
+
+
     implementation('com.yarolegovich:discrete-scrollview:1.4.7') {
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'support-v7'

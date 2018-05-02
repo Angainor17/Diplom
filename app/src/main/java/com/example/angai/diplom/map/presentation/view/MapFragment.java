@@ -1,14 +1,19 @@
 package com.example.angai.diplom.map.presentation.view;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 
 import com.example.angai.diplom.R;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.map.presentation.presenter.IMapPresenter;
 import com.example.angai.diplom.utils.mvp.CustomMvpFragment;
+import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -25,6 +30,9 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
 
     @ViewById(R.id.map_view)
     MapView mapView;
+
+    @ViewById(R.id.floating_action_menu)
+    FloatingActionMenu floatingActionMenu;
 
     private GoogleMap googleMap;
 
@@ -47,7 +55,28 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        presenter.onMapReady();
         initGoogleMap();
+    }
+
+    @Override
+    public void onUserLocationFabClick() {
+
+    }
+
+    @Override
+    public void onSettingsFabClick() {
+
+    }
+
+    @Override
+    public void onRouteFabClick() {
+
+    }
+
+    @Override
+    public void onTransportFabClick() {
+
     }
 
     @Override
@@ -80,8 +109,14 @@ public class MapFragment extends CustomMvpFragment<IMapView, IMapPresenter> impl
         mapView.onStop();
     }
 
+    @Override
+    public void setInitLocation(Location initLocation) {
+        LatLng userLocation = new LatLng(initLocation.getLatitude(), initLocation.getLongitude());
+        googleMap.addMarker(new MarkerOptions().position(userLocation).title("ВЫ"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+    }
+
     private void initGoogleMap() {
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
     }
 }

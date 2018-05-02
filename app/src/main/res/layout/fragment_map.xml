@@ -15,18 +15,54 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/floating_action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="2"
         android:clickable="true"
+        android:focusable="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:focusable="true" />
+
+        app:menu_backgroundColor="@android:color/transparent"
+        app:menu_fab_label="Check!"
+        app:menu_openDirection="up"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/other_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_white"
+            app:fabSize="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/transport_fab"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_topic_white"
+            app:fabSize="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/route_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_directions_bus_white"
+            app:fabSize="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/user_location_fab"
+            android:layout_width="15dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_near_me_white"
+            app:fabSize="mini" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.constraint.ConstraintLayout>

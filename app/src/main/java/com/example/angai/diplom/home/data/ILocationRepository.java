@@ -4,7 +4,7 @@ import android.location.Location;
 
 import io.reactivex.Observable;
 
-public interface IMyLocationRepository {
+public interface ILocationRepository {
 
     Observable<Location> getCurrentLocation();
 

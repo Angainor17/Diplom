@@ -21,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
-public class MyLocationRepository implements IMyLocationRepository {
+public class LocationRepository implements ILocationRepository {
 
     @Inject
     Context context;
@@ -29,7 +29,7 @@ public class MyLocationRepository implements IMyLocationRepository {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    public MyLocationRepository() {
+    public LocationRepository() {
         App.getInjector().getMapComponent().inject(this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }

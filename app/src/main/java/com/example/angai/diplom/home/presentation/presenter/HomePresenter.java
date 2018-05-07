@@ -1,11 +1,15 @@
 package com.example.angai.diplom.home.presentation.presenter;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.home.business.BusStop;
 import com.example.angai.diplom.home.business.IHomeInteractor;
 import com.example.angai.diplom.home.presentation.view.IHomeView;
+import com.example.angai.diplom.map.business.RouteDirection;
+import com.example.angai.diplom.map.presentation.view.MapScreenParams;
+import com.example.angai.diplom.router.business.screens.MapScreen;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
@@ -68,8 +72,44 @@ public class HomePresenter extends MvpBasePresenter<IHomeView> implements IHomeP
     }
 
     @Override
+    public void onBuildRouteBtnClick(String busStopStartText, String busStopStopText) {
+        BusStop busStopStart = getBusStopFromString(busStopStartText);
+        BusStop busStopStop = getBusStopFromString(busStopStopText);
+
+        if (busStopStart != null && busStopStop != null) {
+            if (isViewAttached()) {
+                MapScreenParams mapScreenParams = new MapScreenParams(busStopStart, busStopStop);
+                mapScreenParams.setNeedToShowRoute(true);
+
+                getView().getRouter().showScreen(
+                        new MapScreen(),
+                        MapScreen.getBundle(mapScreenParams)
+                );
+            }
+
+            homeInteractor.setRouteDirection(
+                    new RouteDirection(busStopStart, busStopStop)
+            );
+        } else {
+            if (isViewAttached()) {
+                getView().showIncorrectRouteMessage();
+            }
+        }
+    }
+
+    @Override
     public void destroy() {
         compositeDisposable.clear();
         super.destroy();
+    }
+
+    @Nullable
+    private BusStop getBusStopFromString(String text) {
+        for (BusStop busStop : busStops) {
+            if (busStop.getName().equals(text)) {
+                return busStop;
+            }
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.angai.diplom.map.di;
 
 import com.example.angai.diplom.app.di.AppComponent;
-import com.example.angai.diplom.home.data.LocationRepository;
+import com.example.angai.diplom.location.LocationRepository;
 import com.example.angai.diplom.map.business.MapInteractor;
 import com.example.angai.diplom.map.data.MapRepository;
 import com.example.angai.diplom.map.presentation.presenter.MapPresenter;

@@ -2,6 +2,8 @@ package com.example.angai.diplom.app.di;
 
 import android.content.Context;
 
+import com.example.angai.diplom.utils.dataManager.SharedPreferencesHelper;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -12,4 +14,5 @@ public interface AppComponent {
 
     Context getContext();
 
+    void inject(SharedPreferencesHelper sharedPreferencesHelper);
 }

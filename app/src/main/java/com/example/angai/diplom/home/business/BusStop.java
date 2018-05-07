@@ -3,8 +3,11 @@ package com.example.angai.diplom.home.business;
 import android.location.Location;
 
 import com.example.angai.diplom.home.data.BusStopApiModel;
+import com.google.android.gms.maps.model.LatLng;
 
-public class BusStop {
+import java.io.Serializable;
+
+public class BusStop implements Serializable{
 
     private String id;
     private String name;
@@ -26,6 +29,10 @@ public class BusStop {
             strings[i] = busStops[i].getName();
         }
         return strings;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     public float getDistanceTo(Location location) {

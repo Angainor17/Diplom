@@ -1,5 +1,6 @@
 package com.example.angai.diplom.home.presentation.view;
 
+import android.app.AlertDialog;
 import android.support.annotation.NonNull;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -78,12 +79,25 @@ public class HomeFragment extends CustomMvpFragment<IHomeView, IHomePresenter> i
     @Override
     public void setBusStopNameFrom(String busStopName) {
         busStopFromTv.setText(busStopName);
+        busStopFromTv.dismissDropDown();
     }
 
     @Override
     @Click(R.id.route_btn)
     public void onBuildRouteBtnClick() {
+        presenter.onBuildRouteBtnClick(
+                busStopFromTv.getText().toString(),
+                busStopToTv.getText().toString()
+        );
+    }
 
+    @Override
+    public void showIncorrectRouteMessage() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Выберете начальную и конечную остановку")
+                .setPositiveButton("OK", null)
+                .create();
+        alertDialog.show();
     }
 
     private ArrayAdapter<String> getBusStopsArrayAdapter(BusStop[] busStops) {

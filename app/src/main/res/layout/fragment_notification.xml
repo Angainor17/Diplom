@@ -5,4 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".home.presentation.view.HomeFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/notification_recycle_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/add_notification_fab"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </com.example.angai.diplom.utils.customViews.GradientConstraintLayout>

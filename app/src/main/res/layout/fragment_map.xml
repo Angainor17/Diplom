@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         app:menu_backgroundColor="@android:color/transparent"
-        app:menu_fab_label="Check!"
+        app:menu_fab_label="Choose!"
         app:menu_openDirection="up"
         app:menu_showShadow="true">
 
@@ -53,7 +53,7 @@
             android:id="@+id/route_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_directions_bus_white"
+            android:src="@drawable/ic_icon_route"
             app:fabSize="mini" />
 
         <com.github.clans.fab.FloatingActionButton

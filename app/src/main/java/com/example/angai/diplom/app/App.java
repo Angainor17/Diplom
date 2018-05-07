@@ -13,7 +13,9 @@ public class App extends Application {
         super.onCreate();
 
         injector = new Injector(getApplicationContext());
+//        startService(new Intent(SendLocationService.class));
     }
+
 
     public static Injector getInjector() {
         return injector;

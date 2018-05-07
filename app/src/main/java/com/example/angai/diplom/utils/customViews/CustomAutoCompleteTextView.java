@@ -25,4 +25,6 @@ public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
         }
         return super.performClick();
     }
+
+
 }

@@ -5,7 +5,8 @@ import android.location.Location;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.home.data.BusStopApiModel;
 import com.example.angai.diplom.home.data.IHomeRepository;
-import com.example.angai.diplom.home.data.ILocationRepository;
+import com.example.angai.diplom.location.ILocationRepository;
+import com.example.angai.diplom.map.business.RouteDirection;
 
 import javax.inject.Inject;
 
@@ -57,5 +58,10 @@ public class HomeInteractor implements IHomeInteractor {
             }
             return closestBusStop;
         });
+    }
+
+    @Override
+    public void setRouteDirection(RouteDirection routeDirection) {
+        homeRepository.saveRouteDirection(routeDirection);
     }
 }

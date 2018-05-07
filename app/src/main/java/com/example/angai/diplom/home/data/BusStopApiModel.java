@@ -28,8 +28,6 @@ public class BusStopApiModel {
             return location;
         }
 
-        double l1 = Double.valueOf(longitude);
-        double l2 = Double.valueOf(latitude);
         location.setLongitude(Double.valueOf(longitude));
         location.setLatitude(Double.valueOf(latitude));
 

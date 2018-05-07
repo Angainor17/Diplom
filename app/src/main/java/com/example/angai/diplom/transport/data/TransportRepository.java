@@ -1,6 +1,7 @@
 package com.example.angai.diplom.transport.data;
 
 import com.example.angai.diplom.utils.CustomRetrofit;
+import com.example.angai.diplom.utils.dataManager.SharedPreferencesHelper;
 
 import java.util.ArrayList;
 
@@ -13,8 +14,10 @@ public class TransportRepository implements ITransportRepository {
 
     private Retrofit retrofit;
     private BusRouteApi busRouteApi;
+    private SharedPreferencesHelper sharedPreferences;
 
     public TransportRepository() {
+        sharedPreferences = new SharedPreferencesHelper();
         retrofit = CustomRetrofit.get();
         busRouteApi = retrofit.create(BusRouteApi.class);
     }
@@ -22,9 +25,9 @@ public class TransportRepository implements ITransportRepository {
     @Override
     public Single<ArrayList<RouteApiModel>> getAllBusRoutes() {
         return busRouteApi.getAllBusStops()
+                .onErrorReturn((th) -> sharedPreferences.getRoutesList())
+                .doOnSuccess(sharedPreferences::saveRouteList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
-
-
 }

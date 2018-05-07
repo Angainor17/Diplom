@@ -93,8 +93,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_topic_white" />
-                            <entry key="sourceFile" value="C:\Users\angai" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_icon_route" />
+                            <entry key="sourceFile" value="E:\Icon-Route.svg" />
                           </map>
                         </option>
                       </PersistentState>

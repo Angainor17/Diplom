@@ -1,4 +1,4 @@
-package com.example.angai.diplom.home.data;
+package com.example.angai.diplom.location;
 
 import android.location.Location;
 

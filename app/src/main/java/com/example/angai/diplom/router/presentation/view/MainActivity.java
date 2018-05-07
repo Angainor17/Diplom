@@ -26,6 +26,7 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     private AppScreen currentScreen;
     private long lastBackPressedTime = 0;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +43,16 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
 
     @Override
     public void showScreen(AppScreen appScreen) {
-        currentScreen = appScreen;
+        setCurrentScreen(appScreen);
         showFragment(getFragment(appScreen), appScreen);
     }
 
     @Override
     public void showScreen(AppScreen appScreen, Bundle bundle) {
-        currentScreen = appScreen;
+        setCurrentScreen(appScreen);
         Fragment fragment = getFragment(appScreen);
         fragment.setArguments(bundle);
         showFragment(fragment, appScreen);
-    }
-
-    private void showFragment(Fragment fragment, AppScreen appScreen) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        fragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.fragment_container, fragment, appScreen.toString())
-                .commit();
     }
 
     @Override
@@ -112,11 +104,25 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     }
 
     private void initViews() {
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(item -> {
+        bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             presenter.screenSelected(AppScreen.getById(item.getItemId()));
             return true;
         });
+    }
+
+    private void setCurrentScreen(AppScreen appScreen) {
+        this.currentScreen = appScreen;
+        bottomNavigationView.setSelectedItemId(appScreen.getId());
+    }
+
+    private void showFragment(Fragment fragment, AppScreen appScreen) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment, appScreen.toString())
+                .commit();
     }
 
     private Fragment getFragment(AppScreen appScreen) {
@@ -126,6 +132,4 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
         }
         return fragment;
     }
-
-
 }

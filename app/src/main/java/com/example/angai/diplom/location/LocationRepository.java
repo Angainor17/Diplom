@@ -13,11 +13,16 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.example.angai.diplom.app.App;
+import com.example.angai.diplom.location.api.LocationApi;
+import com.example.angai.diplom.location.model.LocationApiModel;
+import com.example.angai.diplom.utils.CustomRetrofit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
@@ -29,9 +34,14 @@ public class LocationRepository implements ILocationRepository {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    private LocationApi locationApi;
+
     public LocationRepository() {
         App.getInjector().getMapComponent().inject(this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationApi = CustomRetrofit.get().create(LocationApi.class);
     }
 
     @SuppressLint("MissingPermission")
@@ -52,6 +62,18 @@ public class LocationRepository implements ILocationRepository {
         return publishSubject
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Completable sendLocation(Location location) {
+        return locationApi.sendLocation(new LocationApiModel(context, location))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void cancelSendLocation() {
+        compositeDisposable.clear();
     }
 
     private boolean hasGetLocationPermission() {

@@ -4,8 +4,10 @@ import com.example.angai.diplom.notification.business.INotificationInteractor;
 import com.example.angai.diplom.notification.business.NotificationInteractor;
 import com.example.angai.diplom.notification.data.INotificationRepository;
 import com.example.angai.diplom.notification.data.NotificationRepository;
-import com.example.angai.diplom.notification.presentation.presenter.INotificationPresenter;
-import com.example.angai.diplom.notification.presentation.presenter.NotificationPresenter;
+import com.example.angai.diplom.notification.presentation.presenter.detail.IRouteNotificationDetailPresenter;
+import com.example.angai.diplom.notification.presentation.presenter.detail.RouteNotificationDetailPresenter;
+import com.example.angai.diplom.notification.presentation.presenter.main.INotificationPresenter;
+import com.example.angai.diplom.notification.presentation.presenter.main.NotificationPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,5 +28,10 @@ public class NotificationModule {
     @Provides
     INotificationRepository getNotificationRepository() {
         return new NotificationRepository();
+    }
+
+    @Provides
+    public IRouteNotificationDetailPresenter getNotificationDetailPresenter() {
+        return new RouteNotificationDetailPresenter();
     }
 }

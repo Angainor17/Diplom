@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.example.angai.diplom.R;
 import com.example.angai.diplom.app.App;
+import com.example.angai.diplom.location.service.SendLocationService;
 import com.example.angai.diplom.router.business.AppScreen;
+import com.example.angai.diplom.router.business.detailScreen.DetailScreen;
 import com.example.angai.diplom.router.business.screens.HomeScreen;
 import com.example.angai.diplom.router.presentation.presenter.IRouterPresenter;
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
@@ -32,6 +34,7 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     protected void onCreate(Bundle savedInstanceState) {
         App.getInjector().getRouterComponent().inject(this);
         super.onCreate(savedInstanceState);
+        startService(new Intent(this, SendLocationService.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -90,6 +93,25 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
         } else {
             closeApp();
         }
+    }
+
+    @Override
+    public void showDetailScreen(DetailScreen detailScreen) {
+        Intent intent = new Intent(this, detailScreen.getActivityClass());
+        startActivity(intent);
+    }
+
+    @Override
+    public void showDetailScreen(DetailScreen detailScreen, Bundle bundle) {
+        Intent intent = new Intent(this, detailScreen.getActivityClass());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, SendLocationService.class));
+        super.onDestroy();
     }
 
     private void closeApp() {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.home.data.BusStopApiModel;
 import com.example.angai.diplom.map.business.RouteDirection;
+import com.example.angai.diplom.notification.business.RouteNotification;
 import com.example.angai.diplom.transport.data.RouteApiModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +23,7 @@ public class SharedPreferencesHelper {
     private final String BUS_STOPS_LIST_KEY = "bus_stop_list";
     private final String ROUTES_LIST_KEY = "routes_list";
     private final String ROUTE_DIRECTION_KEY = "route_direction";
+    private final String ROUTE_NOTIFICATIONS_KEY = "route_notifications";
 
     private Gson gson;
     private SharedPreferences sharedPreferences;
@@ -69,5 +71,18 @@ public class SharedPreferencesHelper {
                 ROUTE_DIRECTION_KEY,
                 gson.toJson(routeDirection)
         ).apply();
+    }
+
+    public void saveNotifications(ArrayList<RouteNotification> notifications) {
+        sharedPreferences.edit().putString(
+                ROUTE_NOTIFICATIONS_KEY,
+                gson.toJson(notifications)
+        ).apply();
+    }
+
+    public ArrayList<RouteNotification> getNotifications() {
+        String notifications = sharedPreferences.getString(ROUTE_NOTIFICATIONS_KEY, "[]");
+        return gson.fromJson(notifications, new TypeToken<ArrayList<RouteNotification>>() {
+        }.getType());
     }
 }

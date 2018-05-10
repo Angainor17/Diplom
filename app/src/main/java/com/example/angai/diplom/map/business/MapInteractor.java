@@ -5,12 +5,15 @@ import android.location.Location;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.location.ILocationRepository;
 import com.example.angai.diplom.map.data.IMapRepository;
+import com.example.angai.diplom.map.data.MapPointApiModel;
+import com.example.angai.diplom.map.data.MapPointsRequestParams;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -24,6 +27,23 @@ public class MapInteractor implements IMapInteractor {
 
     public MapInteractor() {
         App.getInjector().getMapComponent().inject(this);
+    }
+
+    @Override
+    public Observable<ArrayList<MapTransport>> getTransportMap(MapPointsRequestParams params) {
+        return mapRepository.getMapPoints(params).map(mapPointApiModels -> {
+            ArrayList<MapTransport> mapTransports = new ArrayList<>();
+            for (MapPointApiModel mapPointApiModel : mapPointApiModels) {
+                mapTransports.add(new MapTransport(mapPointApiModel));
+            }
+
+            return mapTransports;
+        });
+    }
+
+    @Override
+    public void unSubscribeFromMapUpdates() {
+        mapRepository.unsubscribeFromMapPoints();
     }
 
     @Override

@@ -10,7 +10,7 @@ public class RouteNotification {
     private BusStop busStop;
     private Route route;
 
-    public boolean isCheched() {
+    public boolean isChecked() {
         return isActive;
     }
 

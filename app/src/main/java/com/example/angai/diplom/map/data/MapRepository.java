@@ -6,6 +6,7 @@ import android.location.Location;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.utils.CustomTextUtils;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
@@ -22,15 +23,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.client.StompClient;
+import ua.naiksoftware.stomp.client.StompMessage;
+
 
 public class MapRepository implements IMapRepository {
 
-    public static final String API_KEY = "AIzaSyCAexqgROeImxSGstpAFnwRh4103WPN00Y";
+    private static final String API_KEY = "AIzaSyCAexqgROeImxSGstpAFnwRh4103WPN00Y";
+
     @Inject
     Context context;
+
+    private StompClient mStompClient;
 
     public MapRepository() {
         App.getInjector().getMapComponent().inject(this);
@@ -58,7 +67,30 @@ public class MapRepository implements IMapRepository {
         }
     }
 
-    private ArrayList<LatLng> getDirectionCoordinates(DirectionsApiRequest req) throws ApiException, InterruptedException, IOException {
+    @Override
+    public Observable<ArrayList<MapPointApiModel>> getMapPoints(MapPointsRequestParams params) {
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.0.100:8080/ws/websocket");
+
+        Observable<ArrayList<MapPointApiModel>> observable = mStompClient.topic("/topic/greetings")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map((StompMessage stompMessage) -> new Gson().fromJson(
+                        stompMessage.getPayload(),
+                        MapPointResponse.class
+                ).getLocations()).toObservable();
+        mStompClient.connect();
+        return observable;
+    }
+
+    @Override
+    public void unsubscribeFromMapPoints() {
+        if (mStompClient != null) {
+            mStompClient.disconnect();
+        }
+    }
+
+    private ArrayList<LatLng> getDirectionCoordinates(DirectionsApiRequest req) throws
+            ApiException, InterruptedException, IOException {
         ArrayList<LatLng> path = new ArrayList<>();
         DirectionsResult res = req.await();
         try {

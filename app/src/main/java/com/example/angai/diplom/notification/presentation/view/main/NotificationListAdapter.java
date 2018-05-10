@@ -45,7 +45,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         holder.timeTv.setText(item.getTime());
         holder.routeTv.setText(item.getRouteName());
         holder.busStopTv.setText(item.getBusStopName());
-        holder.activateSwitch.setChecked(item.isCheched());
+        holder.activateSwitch.setChecked(item.isChecked());
 
         initClickEvent(holder, item);
 

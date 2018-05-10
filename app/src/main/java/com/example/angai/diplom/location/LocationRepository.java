@@ -15,12 +15,15 @@ import android.util.Log;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.location.api.LocationApi;
 import com.example.angai.diplom.location.model.LocationApiModel;
+import com.example.angai.diplom.transport.data.RouteApiModel;
 import com.example.angai.diplom.utils.CustomRetrofit;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -65,7 +68,7 @@ public class LocationRepository implements ILocationRepository {
     }
 
     @Override
-    public Completable sendLocation(Location location) {
+    public Single<ArrayList<RouteApiModel>> sendLocation(Location location) {
         return locationApi.sendLocation(new LocationApiModel(context, location))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());

@@ -17,4 +17,8 @@ public interface IMapPresenter extends MvpPresenter<IMapView> {
     void onTransportFabClick();
 
     void setParams(MapScreenParams mapScreenParams);
+
+    void onViewHide();
+
+    void onViewShow();
 }

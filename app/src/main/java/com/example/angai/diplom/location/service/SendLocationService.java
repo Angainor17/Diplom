@@ -18,6 +18,8 @@ import android.util.Log;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.location.ILocationRepository;
 import com.example.angai.diplom.location.LocationRepository;
+import com.example.angai.diplom.transport.data.RouteApiModel;
+import com.example.angai.diplom.utils.Debug;
 
 import javax.inject.Inject;
 
@@ -74,16 +76,20 @@ public class SendLocationService extends IntentService {
 
     private LocationListener initLocationListener() {
         return new LocationListener() {
+            @SuppressLint("CheckResult")
             @Override
             public void onLocationChanged(Location location) {
-                double longitude = location.getLongitude();
-                double latitude = location.getLatitude();
+                Debug.d("longitude = " + location.getLongitude() + "| latitude = " + location.getLatitude());
 
-                Log.d("debug", "longitude = " + longitude);
-                Log.d("debug", "latitude = " + latitude);
-                locationRepository.sendLocation(location).subscribe(() -> {
-                }, (t) -> {
-                });
+                locationRepository.sendLocation(location).subscribe((routes) -> {
+                    String routesString = "";
+
+                    for (RouteApiModel routeApiModel : routes) {
+                        routesString += routeApiModel.getName() + ", ";
+                    }
+
+                    Debug.d("routes = " + routesString);
+                }, (t) -> Debug.d("serverError "+ t.toString()));
             }
 
             @Override

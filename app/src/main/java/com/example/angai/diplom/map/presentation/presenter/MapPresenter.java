@@ -3,9 +3,12 @@ package com.example.angai.diplom.map.presentation.presenter;
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.map.business.IMapInteractor;
 import com.example.angai.diplom.map.business.RouteDirection;
+import com.example.angai.diplom.map.data.MapPointsRequestParams;
 import com.example.angai.diplom.map.presentation.view.IMapView;
 import com.example.angai.diplom.map.presentation.view.MapScreenParams;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -20,8 +23,10 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
 
     private MapScreenParams mapScreenParams;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable mapPointsCompositeDisposable = new CompositeDisposable();
     private boolean isRouteVisible = false;
     private RouteDirection routeDirection = null;
+    private boolean isTransportMapVisible = false;
 
     public MapPresenter() {
         App.getInjector().getMapComponent().inject(this);
@@ -88,13 +93,52 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
 
     @Override
     public void onTransportFabClick() {
+        if (isTransportMapVisible) {
+            isTransportMapVisible = false;
+            hideTransportMap();
+        } else {
+            isTransportMapVisible = true;
+            showTransportMap();
+        }
+    }
 
+    @Override
+    public void onViewHide() {
+        hideTransportMap();
+    }
+
+    @Override
+    public void onViewShow() {
+        if (isTransportMapVisible) {
+            showTransportMap();
+        }
     }
 
     @Override
     public void detachView() {
         compositeDisposable.clear();
         super.detachView();
+    }
+
+    private void showTransportMap() {
+        mapPointsCompositeDisposable.add(mapInteractor.getTransportMap(getPointsRequestParams())
+                .subscribe((points) -> {
+                    if (isViewAttached()) {
+                        getView().showTransportMap(points);
+                    }
+                }, throwable -> {
+                    if (isViewAttached()) {
+                        getView().hideTransportMap();
+                    }
+                })
+        );
+    }
+
+    private void hideTransportMap() {
+        mapInteractor.unSubscribeFromMapUpdates();
+        if (isViewAttached()) {
+            getView().hideTransportMap();
+        }
     }
 
     private void showUserLocation() {
@@ -134,5 +178,14 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
                             }, throwable -> isRouteVisible = false)
             );
         }
+    }
+
+    private MapPointsRequestParams getPointsRequestParams() {
+        if (isViewAttached()) {
+            MapPointsRequestParams params = new MapPointsRequestParams(getView().getContext());
+            params.setRoutes(new ArrayList<>());// FIXME: 10.05.2018
+            return params;
+        }
+        return new MapPointsRequestParams();
     }
 }

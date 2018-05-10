@@ -8,6 +8,7 @@
     <color name="discreteScrollViewBackground">#8ab0d9</color>
     <color name="shadow">#56649e</color>
 
+
     <color name="gradientPeriodicClouds_c1">#3453d1</color>
     <color name="gradientPeriodicClouds_c2">#6d69ff</color>
     <color name="gradientPeriodicClouds_c3">#cd47c6</color>
@@ -58,5 +59,6 @@
         <item>@color/gradientClear_c3</item>
     </array>
 
+    <color name="map_point_color_1">#46c764</color>
 
 </resources>

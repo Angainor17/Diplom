@@ -1,10 +1,14 @@
 package com.example.angai.diplom.map.presentation.view;
 
+import android.content.Context;
 import android.location.Location;
 
+import com.example.angai.diplom.map.business.MapTransport;
 import com.example.angai.diplom.map.business.RouteDirection;
 import com.google.android.gms.maps.model.LatLng;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+
+import java.util.ArrayList;
 
 public interface IMapView extends MvpView {
 
@@ -15,5 +19,11 @@ public interface IMapView extends MvpView {
     void setRouteVisibility(boolean isVisible);
 
     void moveCamera(LatLng location);
+
+    void showTransportMap(ArrayList<MapTransport> mapTransports);
+
+    void hideTransportMap();
+
+    Context getContext();
 
 }

@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 
-public class BusStop implements Serializable{
+public class BusStop implements Serializable {
 
     private String id;
     private String name;
@@ -49,5 +49,14 @@ public class BusStop implements Serializable{
             busStops[i] = new BusStop(busStopsApiModels[i]);
         }
         return busStops;
+    }
+
+    public static String[] toStringArray(BusStop[] busStops) {
+        String[] strings = new String[busStops.length];
+        for (int i = 0; i < busStops.length; i++) {
+            strings[i] = busStops[i].getName();
+        }
+
+        return strings;
     }
 }

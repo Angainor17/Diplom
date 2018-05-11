@@ -15,13 +15,14 @@ import com.example.angai.diplom.router.business.AppScreen;
 import com.example.angai.diplom.router.business.detailScreen.DetailScreen;
 import com.example.angai.diplom.router.business.screens.HomeScreen;
 import com.example.angai.diplom.router.presentation.presenter.IRouterPresenter;
+import com.example.angai.diplom.utils.mvp.OnActivityResultListener;
 import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
 
 import java.util.Calendar;
 
 import javax.inject.Inject;
 
-public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter, RouterViewState> implements IRouter {
+public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter, RouterViewState> implements IRouter, OnActivityResultListener {
 
     @Inject
     IRouterPresenter presenter;
@@ -29,6 +30,7 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     private AppScreen currentScreen;
     private long lastBackPressedTime = 0;
     private BottomNavigationView bottomNavigationView;
+    private OnActivityResultListener onActivityResultListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,21 @@ public class MainActivity extends MvpViewStateActivity<IRouter, IRouterPresenter
     @Override
     public RouterViewState createViewState() {
         return new RouterViewState();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (onActivityResultListener != null) {
+            onActivityResultListener.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void showDetailScreen(DetailScreen detailScreen, Bundle bundle, OnActivityResultListener listener) {
+        Intent intent = new Intent(this, detailScreen.getActivityClass());
+        intent.putExtras(bundle);
+        this.onActivityResultListener = listener;
+        startActivityForResult(intent, 1);
     }
 
     @Override

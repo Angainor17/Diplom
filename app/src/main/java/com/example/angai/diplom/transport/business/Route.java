@@ -19,4 +19,13 @@ public class Route {
     public String getName() {
         return name;
     }
+
+    public static String[] toStringArray(Route[] routes) {
+        String[] strings = new String[routes.length];
+        for (int i = 0; i < routes.length; i++) {
+            strings[i] = routes[i].getName();
+        }
+
+        return strings;
+    }
 }

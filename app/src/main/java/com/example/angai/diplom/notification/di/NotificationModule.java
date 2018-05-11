@@ -1,5 +1,7 @@
 package com.example.angai.diplom.notification.di;
 
+import com.example.angai.diplom.home.business.HomeInteractor;
+import com.example.angai.diplom.home.business.IHomeInteractor;
 import com.example.angai.diplom.notification.business.INotificationInteractor;
 import com.example.angai.diplom.notification.business.NotificationInteractor;
 import com.example.angai.diplom.notification.data.INotificationRepository;
@@ -8,6 +10,8 @@ import com.example.angai.diplom.notification.presentation.presenter.detail.IRout
 import com.example.angai.diplom.notification.presentation.presenter.detail.RouteNotificationDetailPresenter;
 import com.example.angai.diplom.notification.presentation.presenter.main.INotificationPresenter;
 import com.example.angai.diplom.notification.presentation.presenter.main.NotificationPresenter;
+import com.example.angai.diplom.transport.business.ITransportInteractor;
+import com.example.angai.diplom.transport.business.TransportInteractor;
 
 import dagger.Module;
 import dagger.Provides;
@@ -33,5 +37,15 @@ public class NotificationModule {
     @Provides
     public IRouteNotificationDetailPresenter getNotificationDetailPresenter() {
         return new RouteNotificationDetailPresenter();
+    }
+
+    @Provides
+    IHomeInteractor homeInteractor() {
+        return new HomeInteractor();
+    }
+
+    @Provides
+    ITransportInteractor transportInteractor() {
+        return new TransportInteractor();
     }
 }

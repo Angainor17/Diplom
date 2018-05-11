@@ -1,6 +1,8 @@
 package com.example.angai.diplom.notification.presentation.presenter.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.notification.business.INotificationInteractor;
@@ -41,7 +43,17 @@ public class NotificationPresenter extends MvpBasePresenter<INotificationView> i
                     new Gson().toJson(new RouteNotificationDetailParams(true))
             );
 
-            getView().getRouter().showDetailScreen(new RouteNotificationDetailScreen(), bundle);
+            getView().getRouter().showDetailScreen(
+                    new RouteNotificationDetailScreen(),
+                    bundle,
+                    (requestCode, resultCode, data) -> {
+                        RouteNotification notification = getRouteNotificationFromResult(data);
+                        if (notification != null) {
+                            notifications.add(notification);
+                            refreshItemsList();
+                        }
+                    }
+            );
         }
     }
 
@@ -54,15 +66,55 @@ public class NotificationPresenter extends MvpBasePresenter<INotificationView> i
             bundle.putString("param", new Gson().toJson(params));
 
             getView().getRouter().showDetailScreen(
-                    new RouteNotificationDetailScreen(), bundle
+                    new RouteNotificationDetailScreen(),
+                    bundle,
+                    (requestCode, resultCode, data) -> {
+                        RouteNotification notification = getRouteNotificationFromResult(data);
+                        updateNotification(notification);
+                        refreshItemsList();
+                    }
             );
         }
+    }
+
+    @Nullable
+    private RouteNotification getRouteNotificationFromResult(Intent data) {
+        Bundle resultBundle = data.getExtras();
+        if (resultBundle == null || !resultBundle.containsKey("result")) {
+            return null;
+        }
+
+        return new Gson().fromJson(
+                resultBundle.getString("result"),
+                RouteNotification.class
+        );
     }
 
     private void initNotificationsList() {
         if (isViewAttached()) {
             notifications = interactor.getNotifications();
             getView().setNotificationItems(notifications);
+        }
+    }
+
+    private void refreshItemsList() {
+        if (isViewAttached()) {
+            getView().refreshItems();
+        }
+        interactor.saveNotifications(notifications);
+    }
+
+    private void updateNotification(RouteNotification updatedNotification) {
+        for (int i = 0; i < notifications.size(); i++) {
+            if (updatedNotification.getId() == notifications.get(i).getId()) {
+                if (updatedNotification.isRemoved()) {
+                    notifications.remove(i);
+                    return;
+                }
+
+                notifications.get(i).update(updatedNotification);
+                return;
+            }
         }
     }
 }

@@ -59,6 +59,11 @@ public class NotificationFragment extends CustomMvpFragment<INotificationView, I
     }
 
     @Override
+    public void refreshItems() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
     public void onClick(RouteNotification item) {
         presenter.onItemSelected(item);
     }

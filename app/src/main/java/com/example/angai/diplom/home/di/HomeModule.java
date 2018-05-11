@@ -34,5 +34,4 @@ public class HomeModule {
     ILocationRepository locationRepository() {
         return new LocationRepository();
     }
-
 }

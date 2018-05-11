@@ -10,6 +10,8 @@ public interface INotificationView extends MvpView {
 
     void setNotificationItems(ArrayList<RouteNotification> notifications);
 
+    void refreshItems();
+
     IRouter getRouter();
 
 }

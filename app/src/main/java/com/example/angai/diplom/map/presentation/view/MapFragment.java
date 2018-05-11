@@ -158,7 +158,7 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
 
     @Override
     public void drawDirection(RouteDirection routeDirection) {
-        routeFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_icon_route_green));// FIXME: 11.05.2018
+        routeFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_icon_route_green));
         removeRoute();
         routeMarkers.add(
                 addBusStopMarker(routeDirection.getBusStopStart(), BitmapDescriptorFactory.HUE_GREEN)
@@ -182,14 +182,14 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
 
     @Override
     public void showTransportMap(ArrayList<MapTransport> newMapPoints) {
-        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_green));// FIXME: 11.05.2018
+        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_green));
         updateOldTransportMarkers(newMapPoints);
         addNewTransportMarkers(newMapPoints);
     }
 
     @Override
     public void hideTransportMap() {
-        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_white));// FIXME: 11.05.2018
+        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_white));
         for (MapTransport mapTransport : transportPoints) {
             if (mapTransport.getMarker() != null) {
                 mapTransport.getMarker().remove();
@@ -231,7 +231,7 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
         Marker newMarker = (googleMap.addMarker(
                 new MarkerOptions()
                         .position(newTransport.getLatLng())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))// FIXME: 10.05.2018
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                         .title(newTransport.getLabel())
 
         ));

@@ -53,7 +53,7 @@
             android:id="@+id/route_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_icon_route"
+            android:src="@drawable/ic_icon_route_white"
             app:fabSize="mini" />
 
         <com.github.clans.fab.FloatingActionButton

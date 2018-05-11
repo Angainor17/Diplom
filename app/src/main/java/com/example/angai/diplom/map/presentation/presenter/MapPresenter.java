@@ -27,6 +27,7 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
     private boolean isRouteVisible = false;
     private RouteDirection routeDirection = null;
     private boolean isTransportMapVisible = false;
+    private boolean isUserLocationVisible = true;
 
     public MapPresenter() {
         App.getInjector().getMapComponent().inject(this);
@@ -48,10 +49,19 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
 
     @Override
     public void onUserLocationFabClick() {
+        if (isUserLocationVisible) {
+            isUserLocationVisible = false;
+            if (isViewAttached()) {
+                getView().hideUserLocation();
+            }
+            return;
+        }
+        isUserLocationVisible = true;
+
         compositeDisposable.add(
                 mapInteractor.getUserLocation().subscribe(location -> {
                     if (isViewAttached()) {
-                        getView().setInitLocation(location);
+                        getView().setUserLocation(location);
                     }
                 }, throwable -> {
 
@@ -105,6 +115,7 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
     @Override
     public void onViewHide() {
         hideTransportMap();
+        mapPointsCompositeDisposable.clear();
     }
 
     @Override
@@ -135,6 +146,7 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
     }
 
     private void hideTransportMap() {
+        mapPointsCompositeDisposable.clear();
         mapInteractor.unSubscribeFromMapUpdates();
         if (isViewAttached()) {
             getView().hideTransportMap();
@@ -142,14 +154,15 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
     }
 
     private void showUserLocation() {
+        isUserLocationVisible = true;
         compositeDisposable.add(mapInteractor.getUserLocation()
                 .subscribe(location -> {
                             if (isViewAttached()) {
-                                getView().setInitLocation(location);
+                                getView().setUserLocation(location);
                             }
                         }, throwable -> {
                             if (isViewAttached()) {
-                                getView().setInitLocation(mapInteractor.getDefaultLocation());
+                                getView().setUserLocation(mapInteractor.getDefaultLocation());
                             }
                         }
                 ));

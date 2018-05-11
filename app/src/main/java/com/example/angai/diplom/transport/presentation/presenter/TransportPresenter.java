@@ -26,7 +26,7 @@ public class TransportPresenter extends MvpBasePresenter<ITransportView> impleme
 
     @Override
     public void viewInitAction() {
-        if (routes == null) {
+        if (routes == null || routes.length == 0) {
             initDiscreteScrollView();
         } else {
             refreshRoutesList();

@@ -60,5 +60,6 @@
     </array>
 
     <color name="map_point_color_1">#46c764</color>
+    <color name="fab_clicked_color">#46c764</color>
 
 </resources>

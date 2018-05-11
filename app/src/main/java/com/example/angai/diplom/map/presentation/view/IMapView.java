@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 public interface IMapView extends MvpView {
 
-    void setInitLocation(Location initLocation);
+    void setUserLocation(Location initLocation);
+
+    void hideUserLocation();
 
     void drawDirection(RouteDirection routeDirection);
 

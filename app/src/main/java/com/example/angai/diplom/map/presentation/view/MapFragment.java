@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
@@ -17,6 +18,7 @@ import com.example.angai.diplom.location.service.SendLocationService;
 import com.example.angai.diplom.map.business.MapTransport;
 import com.example.angai.diplom.map.business.RouteDirection;
 import com.example.angai.diplom.map.presentation.presenter.IMapPresenter;
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +50,15 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
     @ViewById(R.id.floating_action_menu)
     FloatingActionMenu floatingActionMenu;
 
+    @ViewById(R.id.user_location_fab)
+    FloatingActionButton userLocationFab;
+
+    @ViewById(R.id.route_fab)
+    FloatingActionButton routeFab;
+
+    @ViewById(R.id.transport_fab)
+    FloatingActionButton transportFab;
+
     private ArrayList<Marker> routeMarkers = new ArrayList<>();
     private ArrayList<MapTransport> transportPoints = new ArrayList<>();
     private Marker userLocationMarker;
@@ -67,6 +78,16 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
 
     @Override
     public void setRouteVisibility(boolean isVisible) {
+        if (isVisible) {
+            routeFab.setImageDrawable(
+                    ContextCompat.getDrawable(getContext(), R.drawable.ic_icon_route_green)
+            );
+        } else {
+            routeFab.setImageDrawable(
+                    ContextCompat.getDrawable(getContext(), R.drawable.ic_icon_route_white)
+            );
+        }
+
         for (Marker marker : routeMarkers) {
             marker.setVisible(isVisible);
         }
@@ -93,6 +114,14 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
         presenter.onMapReady();
     }
 
+    @Override
+    public void hideUserLocation() {
+        userLocationFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_near_me_white));
+        if (userLocationMarker != null) {
+            userLocationMarker.remove();
+        }
+    }
+
     @Click(R.id.other_fab)
     public void onOtherFabClick() {
         presenter.onSettingsFabClick();
@@ -114,7 +143,10 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
     }
 
     @Override
-    public void setInitLocation(Location initLocation) {
+    public void setUserLocation(Location initLocation) {
+        userLocationFab.setImageDrawable(
+                ContextCompat.getDrawable(getContext(), R.drawable.ic_near_me_green)
+        );
         LatLng userLocation = new LatLng(initLocation.getLatitude(), initLocation.getLongitude());
 
         setUserLocation(
@@ -126,6 +158,7 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
 
     @Override
     public void drawDirection(RouteDirection routeDirection) {
+        routeFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_icon_route_green));// FIXME: 11.05.2018
         removeRoute();
         routeMarkers.add(
                 addBusStopMarker(routeDirection.getBusStopStart(), BitmapDescriptorFactory.HUE_GREEN)
@@ -149,17 +182,20 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
 
     @Override
     public void showTransportMap(ArrayList<MapTransport> newMapPoints) {
+        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_green));// FIXME: 11.05.2018
         updateOldTransportMarkers(newMapPoints);
         addNewTransportMarkers(newMapPoints);
     }
 
     @Override
     public void hideTransportMap() {
+        transportFab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_topic_white));// FIXME: 11.05.2018
         for (MapTransport mapTransport : transportPoints) {
             if (mapTransport.getMarker() != null) {
                 mapTransport.getMarker().remove();
             }
         }
+        transportPoints.clear();
     }
 
     private void removeRoute() {
@@ -197,7 +233,12 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
                         .position(newTransport.getLatLng())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))// FIXME: 10.05.2018
                         .title(newTransport.getLabel())
+
         ));
+
+        if (!newTransport.getLabel().isEmpty()) {
+            newMarker.showInfoWindow();
+        }
 
         newTransport.setMarker(newMarker);
         transportPoints.add(newTransport);
@@ -256,8 +297,8 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
         userLocationMarker = newMarker;
     }
 
-    private void initGoogleMap(GoogleMap newInstnceGoogleMap) {
-        googleMap = newInstnceGoogleMap;
+    private void initGoogleMap(GoogleMap newInstanceGoogleMap) {
+        googleMap = newInstanceGoogleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.getUiSettings().setZoomControlsEnabled(false);
         googleMap.getUiSettings().setMapToolbarEnabled(false);
@@ -269,7 +310,7 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
         Projection projection = googleMap.getProjection();
         Point startPoint = projection.toScreenLocation(marker.getPosition());
         final LatLng startLatLng = projection.fromScreenLocation(startPoint);
-        final long duration = SendLocationService.LOCATION_REQUEST_INTERVAL;// FIXME: 11.05.2018 
+        final long duration = SendLocationService.LOCATION_REQUEST_INTERVAL;
 
         final Interpolator interpolator = new LinearInterpolator();
 
@@ -277,12 +318,9 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
             @Override
             public void run() {
                 long elapsed = SystemClock.uptimeMillis() - start;
-                float t = interpolator.getInterpolation((float) elapsed
-                        / duration);
-                double lng = t * toPosition.longitude + (1 - t)
-                        * startLatLng.longitude;
-                double lat = t * toPosition.latitude + (1 - t)
-                        * startLatLng.latitude;
+                float t = interpolator.getInterpolation((float) elapsed / duration);
+                double lng = t * toPosition.longitude + (1 - t) * startLatLng.longitude;
+                double lat = t * toPosition.latitude + (1 - t) * startLatLng.latitude;
                 marker.setPosition(new LatLng(lat, lng));
 
                 if (t < 1.0) {

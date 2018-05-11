@@ -41,6 +41,7 @@ public class MapPoint {
     }
 
     private void initLabel(MapPointApiModel mapPointApiModel) {
+        label = "";
         if (mapPointApiModel.getRoutes().size() == 1) {
             label = mapPointApiModel.getRoutes().get(0).getName();
         }

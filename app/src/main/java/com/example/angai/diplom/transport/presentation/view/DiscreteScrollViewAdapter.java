@@ -46,6 +46,13 @@ public class DiscreteScrollViewAdapter extends RecyclerView.Adapter<DiscreteScro
         return routes.length;
     }
 
+    public Route getRoute(int position) {
+        if (position < routes.length) {
+            return routes[position];
+        }
+        return null;
+    }
+
     public class RoutesViewHolder extends RecyclerView.ViewHolder {
 
         TextView routeNumber;

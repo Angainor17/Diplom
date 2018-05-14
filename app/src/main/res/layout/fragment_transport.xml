@@ -87,5 +87,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="250dp" />
 
+    <ImageView
+        android:id="@+id/show_route"
+        android:layout_width="69dp"
+        android:layout_height="69dp"
+        android:src="@drawable/ic_map_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </com.example.angai.diplom.utils.customViews.GradientConstraintLayout>

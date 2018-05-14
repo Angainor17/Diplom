@@ -1,9 +1,7 @@
-package com.example.angai.diplom.map.data;
+package com.example.angai.diplom.directions.data;
 
-import android.content.Context;
 import android.location.Location;
 
-import com.example.angai.diplom.app.App;
 import com.example.angai.diplom.directions.api.DirectionApi;
 import com.example.angai.diplom.directions.models.DirectionsApiModel;
 import com.example.angai.diplom.directions.models.DirectionsBodyModel;
@@ -12,7 +10,6 @@ import com.example.angai.diplom.utils.CustomRetrofit;
 import com.example.angai.diplom.utils.CustomTextUtils;
 import com.example.angai.diplom.utils.Debug;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
@@ -28,56 +25,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import ua.naiksoftware.stomp.Stomp;
-import ua.naiksoftware.stomp.client.StompClient;
-import ua.naiksoftware.stomp.client.StompMessage;
 
 
-public class MapRepository implements IMapRepository {
+public class DirectionRepository implements IDirectionRepository {
 
     private static final String API_KEY = "AIzaSyCAexqgROeImxSGstpAFnwRh4103WPN00Y";
 
-    @Inject
-    Context context;
-
-    private StompClient mStompClient;
     private Retrofit retrofit;
     private DirectionApi directionApi;
 
-    public MapRepository() {
-        App.getInjector().getMapComponent().inject(this);
+    public DirectionRepository() {
         retrofit = CustomRetrofit.get();
         directionApi = retrofit.create(DirectionApi.class);
 
-        startCalculation();
+//        startCalculation();
     }
 
-    private void startCalculation() {
-        Disposable disposable = directionApi.getDirections()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::calculateDirections,
-                        throwable -> {
-                            Debug.d("");
-                        }
-                );
+    @Override
+    public Single<ArrayList<LatLng>> getDirection(String routeId) {
+        return null;
     }
+//
+//    private void startCalculation() {
+//        Disposable disposable = directionApi.getDirections()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(this::calculateDirections,
+//                        throwable -> {
+//                            Debug.d("");
+//                        }
+//                );
+//    }
 
     private void calculateDirections(ArrayList<DirectionsApiModel> directionsApiModels) {
-        boolean isFirst = true;
-
         for (DirectionsApiModel directionsApiModel : directionsApiModels) {
-//            if (directionsApiModel.getRoute().getId() == 5) {
-//                continue;
-//            }
 
             final String routeId = "" + directionsApiModel.getRoute().getId();
             ArrayList<BusStopApiModel> busStops = directionsApiModel.getBusStopApiModels();
@@ -174,8 +160,8 @@ public class MapRepository implements IMapRepository {
         }
     }
 
-    @Override
-    public Single<ArrayList<LatLng>> getDirection(Location locationStart, Location locationStop) {
+
+    private Single<ArrayList<LatLng>> getDirection(Location locationStart, Location locationStop) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
                 .build();
@@ -193,28 +179,6 @@ public class MapRepository implements IMapRepository {
             return Single.just(new ArrayList<LatLng>())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io());
-        }
-    }
-
-    @Override
-    public Observable<ArrayList<MapPointApiModel>> getMapPoints(MapPointsRequestParams params) {
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.0.100:8080/ws/websocket");
-
-        Observable<ArrayList<MapPointApiModel>> observable = mStompClient.topic("/topic/greetings")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map((StompMessage stompMessage) -> new Gson().fromJson(
-                        stompMessage.getPayload(),
-                        MapPointResponse.class
-                ).getLocations()).toObservable();
-        mStompClient.connect();
-        return observable;
-    }
-
-    @Override
-    public void unsubscribeFromMapPoints() {
-        if (mStompClient != null) {
-            mStompClient.disconnect();
         }
     }
 

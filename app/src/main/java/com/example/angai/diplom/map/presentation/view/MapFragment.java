@@ -168,13 +168,9 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
         );
 
         if (routeDirection.hasDirections()) {
-            PolylineOptions opts = new PolylineOptions()
-                    .addAll(routeDirection.getDirections())
-                    .color(Color.RED)
-                    .width(4);
-
-            routePolyline = googleMap.addPolyline(opts);
+            drawPolyLine(routeDirection.getDirections());
         }
+
         googleMap.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(routeDirection.getBusStopStart().getLatLng(), 14)
         );
@@ -209,6 +205,15 @@ public class MapFragment extends MapViewMvpFragment<IMapView, IMapPresenter> imp
             routePolyline.remove();
             routePolyline = null;
         }
+    }
+
+    private void drawPolyLine(ArrayList<LatLng> routeDirection) {
+        PolylineOptions opts = new PolylineOptions()
+                .addAll(routeDirection)
+                .color(Color.RED)
+                .width(4);
+
+        routePolyline = googleMap.addPolyline(opts);
     }
 
     private void addNewTransportMarkers(ArrayList<MapTransport> newMapPoints) {

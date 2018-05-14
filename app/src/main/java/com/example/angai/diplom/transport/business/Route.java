@@ -4,10 +4,12 @@ import com.example.angai.diplom.transport.data.RouteApiModel;
 
 public class Route {
 
+    private int id;
     private String name;
     private TransportType[] transportTypes;
 
     public Route(RouteApiModel routeApiModel) {
+        this.id = routeApiModel.getId();
         this.name = routeApiModel.getName();
         this.transportTypes = TransportType.getTransportTypes(routeApiModel.getTransportType());
     }
@@ -18,6 +20,10 @@ public class Route {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public static String[] toStringArray(Route[] routes) {

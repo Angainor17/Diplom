@@ -7,4 +7,6 @@ public interface ITransportPresenter extends MvpPresenter<ITransportView> {
 
     void viewInitAction();
 
+    void showRouteOnClick();
+
 }

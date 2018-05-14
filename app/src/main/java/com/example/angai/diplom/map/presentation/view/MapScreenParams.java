@@ -10,7 +10,15 @@ public class MapScreenParams implements Serializable {
     private RouteDirection routeDirection;
     private boolean needToShowRoute;
 
+    public MapScreenParams() {
+
+    }
+
     public MapScreenParams(RouteDirection routeDirection) {
+        this.routeDirection = routeDirection;
+    }
+
+    public void setRouteDirection(RouteDirection routeDirection) {
         this.routeDirection = routeDirection;
     }
 

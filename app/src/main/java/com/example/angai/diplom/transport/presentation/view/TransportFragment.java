@@ -18,6 +18,7 @@ import com.yarolegovich.discretescrollview.transform.Pivot;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -41,6 +42,9 @@ public class TransportFragment extends CustomMvpFragment<ITransportView, ITransp
     @ViewById(R.id.trolley_type)
     ImageView trolleyIcon;
 
+    @ViewById(R.id.show_route)
+    ImageView showRouteBtn;
+
     public TransportFragment() {
         App.getInjector().getTransportComponent().inject(this);
     }
@@ -57,9 +61,21 @@ public class TransportFragment extends CustomMvpFragment<ITransportView, ITransp
         presenter.viewInitAction();
     }
 
+    @Click(R.id.show_route)
+    public void showRouteBtnClick() {
+        presenter.showRouteOnClick();
+    }
+
     @Override
     public void setRouteListSelection(int position) {
         discreteScrollView.scrollToPosition(position);
+    }
+
+    @Override
+    public Route getSelectedRoute() {
+        int position = discreteScrollView.getCurrentItem();
+
+        return ((DiscreteScrollViewAdapter) discreteScrollView.getAdapter()).getRoute(position);
     }
 
     @Override

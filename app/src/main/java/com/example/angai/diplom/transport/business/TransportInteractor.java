@@ -1,8 +1,11 @@
 package com.example.angai.diplom.transport.business;
 
 import com.example.angai.diplom.app.App;
+import com.example.angai.diplom.home.business.BusStop;
 import com.example.angai.diplom.transport.data.ITransportRepository;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.inject.Inject;
@@ -31,5 +34,15 @@ public class TransportInteractor implements ITransportInteractor {
             }
             return result;
         });
+    }
+
+    @Override
+    public Single<ArrayList<LatLng>> getRoutePoints(Route route) {
+        return null;
+    }
+
+    @Override
+    public Single<ArrayList<BusStop>> getRouteBusStops(Route route) {
+        return null;
     }
 }

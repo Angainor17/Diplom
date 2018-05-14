@@ -52,7 +52,7 @@ public class SendLocationService extends IntentService {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    LOCATION_REQUEST_INTERVAL,
+                    2 * LOCATION_REQUEST_INTERVAL,
                     0,
                     locationListener
             );
@@ -89,7 +89,7 @@ public class SendLocationService extends IntentService {
                     }
 
                     Debug.d("routes = " + routesString);
-                }, (t) -> Debug.d("serverError "+ t.toString()));
+                }, (t) -> Debug.d("serverError " + t.toString()));
             }
 
             @Override

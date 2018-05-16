@@ -1,5 +1,7 @@
 package com.example.angai.diplom.transport.di;
 
+import com.example.angai.diplom.directions.data.DirectionRepository;
+import com.example.angai.diplom.directions.data.IDirectionRepository;
 import com.example.angai.diplom.transport.business.ITransportInteractor;
 import com.example.angai.diplom.transport.business.TransportInteractor;
 import com.example.angai.diplom.transport.data.ITransportRepository;
@@ -26,5 +28,10 @@ public class TransportModule {
     @Provides
     ITransportPresenter transportPresenter() {
         return new TransportPresenter();
+    }
+
+    @Provides
+    IDirectionRepository directionRepository() {
+        return new DirectionRepository();
     }
 }

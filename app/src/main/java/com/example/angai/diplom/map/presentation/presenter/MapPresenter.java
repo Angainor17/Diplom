@@ -93,12 +93,12 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
                 getView().moveCamera(routeDirection.getBusStopStart().getLatLng());
                 return;
             }
+            getView().drawDirection(routeDirection);
             showDirection(routeDirection);
         }
         if (this.mapScreenParams != null) {
             initMapScreenParams(mapScreenParams);
         }
-
     }
 
     @Override
@@ -177,6 +177,13 @@ public class MapPresenter extends MvpBasePresenter<IMapView> implements IMapPres
 
     private void showDirection(RouteDirection routeDirection) {
         if (routeDirection != null) {
+            if (!routeDirection.getDirections().isEmpty()) {
+                if (isViewAttached()) {
+                    getView().drawDirection(routeDirection);
+                }
+                return;
+            }
+
             compositeDisposable.add(mapInteractor.getDirection(routeDirection)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())

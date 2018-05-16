@@ -1,7 +1,9 @@
 package com.example.angai.diplom.transport.business;
 
 import com.example.angai.diplom.app.App;
+import com.example.angai.diplom.directions.data.IDirectionRepository;
 import com.example.angai.diplom.home.business.BusStop;
+import com.example.angai.diplom.home.data.BusStopApiModel;
 import com.example.angai.diplom.transport.data.ITransportRepository;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,6 +18,9 @@ public class TransportInteractor implements ITransportInteractor {
 
     @Inject
     ITransportRepository transportRepository;
+
+    @Inject
+    IDirectionRepository directionRepository;
 
     public TransportInteractor() {
         App.getInjector().getTransportComponent().inject(this);
@@ -38,11 +43,21 @@ public class TransportInteractor implements ITransportInteractor {
 
     @Override
     public Single<ArrayList<LatLng>> getRoutePoints(Route route) {
-        return null;
+        return directionRepository.getDirection("" + route.getId());
     }
 
     @Override
     public Single<ArrayList<BusStop>> getRouteBusStops(Route route) {
-        return null;
+        return directionRepository.getBusStops(route.getId()).map(
+                busStopApiModels -> {
+                    ArrayList<BusStop> busStops = new ArrayList<>();
+
+                    for (BusStopApiModel busStopApiModel : busStopApiModels) {
+                        busStops.add(new BusStop(busStopApiModel));
+                    }
+
+                    return busStops;
+                }
+        );
     }
 }

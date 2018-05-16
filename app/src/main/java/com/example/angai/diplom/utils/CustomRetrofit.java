@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomRetrofit {
 
-    public static final String BASE_URL = "http://192.168.0.100:8080/";
+    private static final String BASE_URL = "http://192.168.0.100:8080/";
 
     public static Retrofit get() {
         return new Retrofit.Builder()

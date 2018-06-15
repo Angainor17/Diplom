@@ -40,26 +40,15 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
-                                      <entry key="image">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="paddingPercent" value="-10" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="cropped" value="true" />
-                                      <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="E:\ic_arrow_back_black_24dp.png" />
-                                      <entry key="outputName" value="ic_arrow_back" />
+                                      <entry key="iconShape" value="CIRCLE" />
+                                      <entry key="imageAsset" value="C:\Users\angai\OneDrive\Рабочий стол\14-06-2018 22-48-29.png" />
+                                      <entry key="outputName" value="launcher_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>

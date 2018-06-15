@@ -16,13 +16,13 @@ repositories {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.diplom.angai.diplom"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

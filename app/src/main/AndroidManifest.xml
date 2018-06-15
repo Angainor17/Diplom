@@ -13,6 +13,7 @@
         android:name=".app.App"
         android:icon="@mipmap/launcher_icon"
         android:label="SevTrans Test Demo"
+        android:allowBackup="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
